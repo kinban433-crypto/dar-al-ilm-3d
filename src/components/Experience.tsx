@@ -42,24 +42,43 @@ export default function Experience({ children }: { children: React.ReactNode }) 
     gsap.ticker.lagSmoothing(0);
 
     /* Video scrub state — ScrollTrigger supplies the target, rAF eases into it. */
+    const FRAME = 1 / 24; // source footage is 24 fps
+    const MIN_SEEK_MS = 42; // never issue more than ~24 seeks per second
     let duration = 0;
     let scrollProgress = 0;
     let targetTime = 0;
     let currentTime = 0;
     let scrubFrame = 0;
+    let lastFrame = -1;
+    let seekPending = false;
+    let seekTimer = 0;
     let scrubTween: gsap.core.Tween | undefined;
+
+    const clearSeek = () => {
+      seekPending = false;
+      window.clearTimeout(seekTimer);
+    };
+    const onSeeked = () => clearSeek();
+    video?.addEventListener("seeked", onSeeked);
 
     const tick = () => {
       scrubFrame = requestAnimationFrame(tick);
-      if (!video || !duration) return;
+      // Wait until the decoded frame is presented, so rapid scrolling never
+      // queues an unbounded backlog of seeks.
+      if (!video || !duration || seekPending) return;
       const max = Math.max(duration - 0.05, 0);
       const next = Math.min(
-        Math.max(currentTime + (targetTime - currentTime) * (reduced ? 1 : 0.14), 0),
+        Math.max(currentTime + (targetTime - currentTime) * (reduced ? 1 : 0.18), 0),
         max,
       );
-      if (Math.abs(next - currentTime) < 0.0005) return;
-      currentTime = next;
-      video.currentTime = next;
+      const frame = Math.round(next / FRAME);
+      if (frame === lastFrame) return;
+      lastFrame = frame;
+      currentTime = Math.min(frame * FRAME, max);
+      seekPending = true;
+      window.clearTimeout(seekTimer);
+      seekTimer = window.setTimeout(clearSeek, MIN_SEEK_MS * 3);
+      video.currentTime = currentTime;
     };
     scrubFrame = requestAnimationFrame(tick);
 
@@ -145,6 +164,7 @@ export default function Experience({ children }: { children: React.ReactNode }) 
       scrollProgress = scrubTween?.scrollTrigger?.progress ?? scrollProgress;
       targetTime = scrollProgress * Math.max(duration - 0.05, 0);
       currentTime = targetTime;
+      lastFrame = Math.round(currentTime / FRAME);
       unlock();
     };
     video?.addEventListener("loadedmetadata", onLoaded, { once: true });
@@ -155,6 +175,8 @@ export default function Experience({ children }: { children: React.ReactNode }) 
     return () => {
       ctx.revert();
       cancelAnimationFrame(scrubFrame);
+      window.clearTimeout(seekTimer);
+      video?.removeEventListener("seeked", onSeeked);
       video?.removeEventListener("loadedmetadata", onLoaded);
       window.removeEventListener("pointerdown", unlock);
       window.removeEventListener("touchstart", unlock);
