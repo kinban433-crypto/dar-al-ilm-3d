@@ -43,7 +43,7 @@ export default function Experience({ children }: { children: React.ReactNode }) 
 
     /* Video scrub state — ScrollTrigger supplies the target, rAF eases into it. */
     const FRAME = 1 / 24; // source footage is 24 fps
-    const MIN_SEEK_MS = 42; // never issue more than ~24 seeks per second
+    const MIN_SEEK_MS = 24; // frame cap plus a short fallback if seeked fires slowly
     let duration = 0;
     let scrollProgress = 0;
     let targetTime = 0;
@@ -68,7 +68,7 @@ export default function Experience({ children }: { children: React.ReactNode }) 
       if (!video || !duration || seekPending) return;
       const max = Math.max(duration - 0.05, 0);
       const next = Math.min(
-        Math.max(currentTime + (targetTime - currentTime) * (reduced ? 1 : 0.18), 0),
+        Math.max(currentTime + (targetTime - currentTime) * (reduced ? 1 : 0.22), 0),
         max,
       );
       const frame = Math.round(next / FRAME);
