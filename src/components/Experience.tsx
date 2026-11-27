@@ -111,7 +111,7 @@ export default function Experience({ children }: { children: React.ReactNode }) 
           trigger: wrap.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.5,
+          scrub: 0.35,
           invalidateOnRefresh: true,
         },
       });

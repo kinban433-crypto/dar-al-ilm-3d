@@ -55,10 +55,17 @@ html[dir="rtl"] [data-ltr] {
 }
 
 .glass {
-  background: rgba(246, 243, 236, 0.84);
+  background: rgba(246, 243, 236, 0.9);
   border: 1px solid rgba(17, 24, 39, 0.1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Live backdrop blur over a scrubbing video forces constant re-compositing on
+   integrated GPUs. Surfaces are already 90% opaque, so blur adds almost nothing. */
+.glass,
+.backdrop-blur-md,
+.backdrop-blur-sm {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 .shell {
