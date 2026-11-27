@@ -108,9 +108,9 @@ export default function Experience({ children }: { children: React.ReactNode }) 
           targetTime = scrollProgress * Math.max(duration - 0.05, 0);
         },
         scrollTrigger: {
-          trigger: wrap.current,
+          trigger: "[data-act='0']",
           start: "top top",
-          end: "bottom bottom",
+          end: "bottom top",
           scrub: 0.35,
           invalidateOnRefresh: true,
         },
@@ -209,7 +209,7 @@ export default function Experience({ children }: { children: React.ReactNode }) 
         disablePictureInPicture
         aria-hidden="true"
         style={{ transform: "translateZ(0)", backfaceVisibility: "hidden" }}
-        className="pointer-events-none fixed inset-0 z-0 h-full w-full object-cover opacity-100"
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-screen w-full object-cover opacity-100"
       />
       <ForegroundGraphics />
       <div ref={wrap} className="relative z-10">
