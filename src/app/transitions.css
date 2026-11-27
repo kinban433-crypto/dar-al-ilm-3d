@@ -100,6 +100,12 @@
 .t-learn:hover .t-learn-arm-top { transform: rotate(var(--learn-spread)); }
 .t-learn:hover .t-learn-arm-bot { transform: rotate(calc(var(--learn-spread) * -1)); }
 
+/* RTL: the chevron points left, so mirror the shift and the arm pivot. */
+html[dir="rtl"] .t-learn:hover .t-learn-chevron {
+  transform: translateX(calc(var(--learn-shift) * -1));
+}
+html[dir="rtl"] .t-learn-arm { transform-origin: 6px 8px; }
+
 @media (prefers-reduced-motion: reduce) {
   .t-modal,
   .t-acc-panel,

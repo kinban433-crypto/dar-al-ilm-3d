@@ -434,12 +434,24 @@ export default function DarAlIlmGlobeHero() {
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <a
               href="#programmes"
-              className="inline-flex items-center gap-2 bg-navy px-6 py-3.5 font-mono text-[9px] uppercase tracking-[0.2em] text-limestone transition-colors hover:bg-brass hover:text-ink"
+              className="t-learn inline-flex items-center gap-2 bg-navy px-6 py-3.5 font-mono text-[9px] uppercase tracking-[0.2em] text-limestone transition-colors hover:bg-brass hover:text-ink"
             >
               {t.hero.primary}
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                <path d={rtl ? "M10 4L6 8L10 12" : "M6 4L10 8L6 12"} />
-              </svg>
+              <span className="t-learn-chevron" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  {rtl ? (
+                    <>
+                      <path className="t-learn-arm t-learn-arm-top" d="M10 4L6 8" />
+                      <path className="t-learn-arm t-learn-arm-bot" d="M6 8L10 12" />
+                    </>
+                  ) : (
+                    <>
+                      <path className="t-learn-arm t-learn-arm-top" d="M6 4L10 8" />
+                      <path className="t-learn-arm t-learn-arm-bot" d="M10 8L6 12" />
+                    </>
+                  )}
+                </svg>
+              </span>
             </a>
             <button
               type="button"
