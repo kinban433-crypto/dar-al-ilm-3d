@@ -408,7 +408,17 @@ export default function DarAlIlmGlobeHero() {
       className="relative overflow-hidden border-b border-ink/10 bg-limestone/40"
       aria-label={copy.book.ariaGlobe}
     >
-      <div className="shell relative grid min-h-[92vh] gap-10 py-28 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] md:items-center md:py-32">
+      {/* Legibility scrim over the existing site backdrop — gradient only, no blur. */}
+      <div
+        aria-hidden="true"
+        className={cx(
+          "pointer-events-none absolute inset-y-0 w-[78%]",
+          rtl
+            ? "bg-gradient-to-l from-limestone/95 via-limestone/70 to-transparent"
+            : "bg-gradient-to-r from-limestone/95 via-limestone/70 to-transparent"
+        )}
+      />
+      <div className="shell relative grid min-h-[92vh] gap-10 py-24 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] md:items-center md:py-32">
         {/* ── Editorial framing ─────────────────────────────────────── */}
         <div className="relative z-10">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-brass">
@@ -440,7 +450,7 @@ export default function DarAlIlmGlobeHero() {
             </button>
           </div>
 
-          <div className="mt-10 grid max-w-[520px] grid-cols-2 gap-px border border-ink/10 bg-ink/10 sm:grid-cols-4">
+          <div className="mt-8 grid max-w-[520px] grid-cols-2 gap-px border border-ink/10 bg-ink/10 sm:grid-cols-4 md:mt-10">
             {t.metrics.map((metric) => (
               <div key={metric.label} className="bg-limestone px-4 py-3.5">
                 <p className="font-display text-[1.7rem] leading-none tracking-[-0.02em]">
@@ -452,7 +462,7 @@ export default function DarAlIlmGlobeHero() {
             ))}
           </div>
 
-          <p className="mt-8 flex items-start gap-2 font-mono text-[9px] uppercase leading-[1.9] tracking-[0.14em] text-slate">
+          <p className="mt-6 flex items-start gap-2 font-mono text-[9px] uppercase leading-[1.9] tracking-[0.14em] text-slate md:mt-8">
             <span className="mt-1.5 h-px w-6 shrink-0 bg-brass" />
             <span>{copy.spinHint}<br />{copy.openHint}</span>
           </p>
@@ -462,7 +472,7 @@ export default function DarAlIlmGlobeHero() {
         <div
           ref={globeRef}
           className={cx(
-            "relative h-[min(72vh,660px)] min-h-[440px] w-full select-none",
+            "relative h-[min(58vh,520px)] min-h-[360px] w-full select-none md:h-[min(72vh,660px)] md:min-h-[440px]",
             dragging ? "cursor-grabbing" : "cursor-grab"
           )}
           style={{ perspective: "1400px", touchAction: "pan-y" }}
@@ -557,6 +567,7 @@ export default function DarAlIlmGlobeHero() {
       {/* ── Open dossier: hinged hardcover + three interior pages ────── */}
       {activeDossier && (
         <div
+          data-dossier-book
           className="fixed inset-0 z-[70] flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
