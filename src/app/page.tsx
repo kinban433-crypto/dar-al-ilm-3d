@@ -1,8 +1,10 @@
 "use client";
 
 import Experience from "@/components/Experience";
+import DarAlIlmGlobeHero from "@/components/DarAlIlmGlobeHero";
 import OrientationExpress from "@/components/OrientationExpress";
 import ProgrammeFilter from "@/components/ProgrammeFilter";
+import FaqAccordion from "@/components/FaqAccordion";
 import { whatsappHref } from "@/lib/content";
 import { useLocale } from "@/i18n/LocaleProvider";
 
@@ -19,52 +21,8 @@ export default function Home() {
 
   return (
     <Experience>
-      {/* ACT I — Hero arrival */}
-      <section data-act="0" className="relative flex min-h-screen items-center">
-        <div className="shell relative w-full pt-28 pb-28">
-          <div className="glass max-w-[460px] bg-[#F6F3EC]/90 p-7 backdrop-blur-md" data-reveal>
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-brass">
-              {t.brand.mark} · 07 — {t.brand.eyebrow}
-            </p>
-            <h1 className="mt-7 font-display text-[clamp(2.3rem,3.8vw,3.6rem)] leading-[0.98] tracking-[-0.04em]">
-              {t.hero.title[0]}
-              <br />
-              <span className="italic text-navy">{t.hero.title[1]}</span>
-            </h1>
-            <p className="mt-7 max-w-[44ch] text-[14px] leading-[1.75] text-slate">{t.hero.subtitle}</p>
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <a href="#programmes" data-magnetic className="bg-navy px-6 py-3.5 font-mono text-[9px] uppercase tracking-[0.2em] text-limestone transition-colors hover:bg-brass hover:text-ink">
-                {t.hero.primary}
-              </a>
-              <button type="button" data-booking data-magnetic className="border border-ink/25 px-6 py-3.5 font-mono text-[9px] uppercase tracking-[0.2em] text-ink transition-colors hover:border-brass hover:text-brass">
-                {t.hero.secondary}
-              </button>
-            </div>
-          </div>
-
-          <div data-reveal className="mt-8 grid grid-cols-2 gap-px border border-ink/10 bg-ink/10 backdrop-blur-md lg:absolute lg:right-6 lg:top-8 lg:mt-0 lg:w-[min(54vw,760px)] lg:grid-cols-4">
-            {t.metrics.map((m) => (
-              <div key={m.label} className="bg-[#F6F3EC]/90 px-5 py-4">
-                <p className="font-display text-[clamp(1.6rem,2.4vw,2.1rem)] leading-none tracking-[-0.02em]">
-                  <span data-ltr>{m.value}</span><span className="text-brass">{m.suffix ?? ""}</span>
-                </p>
-                <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.16em] text-ink/80">{m.label}</p>
-                <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.12em] text-slate">{m.note}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div aria-hidden className="absolute inset-x-0 bottom-0 z-20 overflow-hidden bg-navy py-4">
-          <div className="ticker-track">
-            {[0, 1].map((copy) => (
-              <span key={copy} dir="ltr" className="shrink-0 font-mono text-[10px] uppercase tracking-[0.32em] text-limestone/90">
-                {t.ticker}&nbsp;&nbsp;{t.ticker}&nbsp;&nbsp;
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ACT I — Interactive 3D study dossier globe */}
+      <DarAlIlmGlobeHero />
 
       {/* ACT II — Programmes */}
       <section id="programmes" data-act="1" className="relative py-28 md:py-36">
@@ -238,17 +196,8 @@ export default function Home() {
             <Label>{t.faq.eyebrow}</Label>
             <h2 className="mt-7 font-display text-[clamp(2.2rem,4vw,3.4rem)] leading-tight">{t.faq.title}</h2>
           </div>
-          <div className="glass mt-10 border-t border-ink/20 bg-[#F6F3EC]/90 p-6 backdrop-blur-md md:p-8">
-            {t.faq.items.map((item, i) => (
-              <details key={item.q} className="group border-b border-ink/10">
-                <summary className="flex cursor-pointer list-none items-baseline gap-5 py-5 [&::-webkit-details-marker]:hidden">
-                  <span className="w-6 shrink-0 font-mono text-[9px] text-slate">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="flex-1 text-[15px] leading-snug text-ink/90">{item.q}</span>
-                  <span aria-hidden className="font-display text-xl text-brass transition-transform group-open:rotate-45">+</span>
-                </summary>
-                <p className="max-w-[78ch] pb-6 ps-11 text-[13.5px] leading-[1.8] text-slate">{item.a}</p>
-              </details>
-            ))}
+          <div className="glass mt-10 bg-[#F6F3EC]/90 p-6 backdrop-blur-md md:p-8">
+            <FaqAccordion items={t.faq.items} />
           </div>
         </div>
       </section>

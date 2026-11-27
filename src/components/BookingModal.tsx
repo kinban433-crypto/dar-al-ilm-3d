@@ -63,7 +63,7 @@ export default function BookingModal() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="booking-title"
-        className="glass relative w-full max-w-lg p-7 shadow-2xl md:p-10"
+        className={`glass t-modal relative w-full max-w-lg p-7 shadow-2xl md:p-10 ${open ? "is-open" : ""}`}
       >
         <div className="flex items-start justify-between gap-6">
           <div>

@@ -3,6 +3,7 @@ import {
   Amiri, Cormorant_Garamond, IBM_Plex_Sans_Arabic, JetBrains_Mono, Plus_Jakarta_Sans,
 } from "next/font/google";
 import "./globals.css";
+import "./transitions.css";
 import { BRAND, PROGRAMMES } from "@/lib/content";
 import LocaleProvider from "@/i18n/LocaleProvider";
 
